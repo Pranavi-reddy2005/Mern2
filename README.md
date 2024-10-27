@@ -1,1 +1,1 @@
-React README
+MERN Stack Course
