@@ -22,13 +22,6 @@ const Contact = () => {
   </select>
 </div>
 
-
-    
-    
-    
-    
-    
-    
     
       </div>
     </>
