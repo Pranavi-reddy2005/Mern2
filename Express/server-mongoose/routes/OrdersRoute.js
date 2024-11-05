@@ -11,4 +11,4 @@ router.get('/all',async(req,res)=>{
     }
 })
 
-module.export = router
+module.exports = router
