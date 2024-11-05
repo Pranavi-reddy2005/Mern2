@@ -1,9 +1,10 @@
 const express = require('express')
 const app = express()
 const port = 3000
-const db = require('./config/db') 
+const db = require('./config/db')
 app.use(express.json())
 const Products = require('./routes/ProductRoute')
+
 // const Users = require('./models/UserModel')
 
 app.get('/',(req, res)=> res.status(200).json({ message: "Welcome" }))

@@ -1,5 +1,5 @@
 const express = require('express')
-const router = express.Router();
+const router = express.Router()
 const Products = require('../models/ProductsModel')
 
 // Method : GET | API URL : localhost:3000/products/all
@@ -15,8 +15,8 @@ router.get('/all', async(req, res) => {
 router.post('/add', async (req, res) => {
     try {
         const ProductData = new Products(req.body)
-        const { title, img, price, } = ProductData
-        if(!title || !img || !price){
+        const { name, img, price, } = ProductData
+        if(!name || !img || !price){
             res.status(401).json({message:"All fields required"})
         }
         const storedata = await ProductData.save()
