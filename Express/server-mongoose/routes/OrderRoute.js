@@ -15,7 +15,7 @@ router.post('/add', async (req, res) => {
     try {
         const neworder = new Orders(req.body)
         const { uid, pid, phone, address, total } = neworder
-        if (!uid || !pid || !email || !phone || !address || total) {
+        if (!uid || !pid || !phone || !address || !total) {
             res.send(401).json({ message: "All fields required" })
         }
         //TODO : Add User & Product Validation 
