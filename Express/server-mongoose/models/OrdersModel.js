@@ -1,28 +1,34 @@
 const mongoose = require('mongoose')
 
 const OrdersSchema = new mongoose.Schema({
-    userID: {
+    uid: {
+        type: String,
+        required: true
+    },
+    pid: {
         type: String,
         required: true,
-        unique: true
     },
-    productID: {
+    total: {
         type: String,
         required: true,
     },
     phone: {
         type: Number,
         required: true,
-        unique: true
     },
-    shippingaddress: {
-            type: String,
-            required: true
-     },
-            
+    address: {
+        type: String,
+        required: true,
+    }, 
+    orderedAt: {
+        type: Date,
+        default: Date.now,
+    }
 })
-
 
 const Orders = mongoose.model("Orders", OrdersSchema)
 
-module.exports = Orders;
+module.exports = Orders
+
+
