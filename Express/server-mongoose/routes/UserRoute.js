@@ -16,7 +16,7 @@ router.post('/add', async (req, res) => {
         const newuser = new Users(req.body)
         const { name, email, phone, password } = newuser
         if (!name || !email || !phone || !password) {
-            res.send(401).json({ message: "All fields required" })
+            res.status(400).json({ message: "All fields required" })
         }
 
         //TODO : Add User Email & Phone Validation
@@ -36,7 +36,7 @@ router.put('/edit/:id', async (req, res) => {
         const id = req.params.id
         const existinguser = await Users.findOne({ _id: id })
         if (!existinguser) {
-            res.send(404).json({ message: "User not found" })
+            res.status(404).json({ message: "User not found" })
         }
         const updateduser = await Users.findByIdAndUpdate(id, req.body, { new: true })
         res.status(200).json(updateduser)

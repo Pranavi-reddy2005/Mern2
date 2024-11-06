@@ -18,7 +18,7 @@ router.post('/add', async (req, res) => {
         const ProductData = new Products(req.body)
         const { name, img, price, } = ProductData
         if(!name || !img || !price){
-            res.status(401).json({message:"All fields required"})
+            res.status(400).json({message:"All fields required"})
         }
         const storedata = await ProductData.save()
         res.status(200).json(ProductData)
@@ -56,3 +56,21 @@ router.delete('/delete/:id', async (req, res) => {
 })
 
 module.exports = router
+
+// 1.GET
+// 2.POST
+// 3.PUT
+// 4.DELETE
+
+// 1.READ
+// 2.CREATE
+// 3.UPDATE
+// 4.DELETE
+
+
+// 200 -> OK
+// 404 -> NOT FOUND
+// 500 -> INTERNAL SERVER ERROR
+// 201 -> CREATED
+// 400 -> BAD Request
+// 401 -> UnAuthorized
