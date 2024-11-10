@@ -9,6 +9,7 @@ import TwClasses from './pages/TwClasses'
 import AdminProducts from './pages/Admin/AdminProducts'
 import AdminUsers from './pages/Admin/AdminUsers'
 import AdminSettings from './pages/Admin/AdminSettings'
+import AdminOrders from './pages/Admin/AdminOrders'
 // import {} from 'react'
 const App = () => {
     return (
@@ -24,9 +25,10 @@ const App = () => {
                     <Route element={<AdminLayout />}>
                         <Route path='/admin/dashboard' element={<AdminDashboard />} />
                         <Route path='/admin/products'  element={<AdminProducts />} />
+                        <Route path='/admin/orders'  element={<AdminOrders />} />
                         <Route path='/admin/users'  element={<AdminUsers />} />
                         <Route path='/admin/settings'  element={<AdminSettings />} />
-
+                       
                     </Route>                 
                 </Routes>
             </BrowserRouter>
