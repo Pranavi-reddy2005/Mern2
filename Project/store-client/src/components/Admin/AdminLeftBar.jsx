@@ -32,7 +32,7 @@ const AdminLeftBar = () => {
         </div>
         <div className='h-[80%] w-full flex flex-col items-center'>
           {Linksdata.map((link, index) => (
-            <NavLink to={link.path} key={index} className='h-[10%] w-full px-8 hover:bg-purple-500/90 hover:text-white flex justify-start items-center rounded-sm'>
+            <NavLink to={link.path} key={index} className='h-[10%] w-full px-8 hover:bg-purple-500/90 hover:text-white flex justify-start items-center rounded-sm shadow-md'>
               {link.title}
             </NavLink>
           ))
