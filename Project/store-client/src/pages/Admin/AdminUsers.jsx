@@ -50,7 +50,7 @@ const AdminUsers= () => {
   }
   return (
     <div className='w-full h-full flex flex-col justify-start items-start'>
-      <AdminPageHeader title='Products' />
+      <AdminPageHeader title='Users' />
       <table className='w-full h-full border-collapse border shadow-lg rounded-md'>
         <thead className='shadow-sm font-bold text-purple-500 text-left'>
           <tr>
