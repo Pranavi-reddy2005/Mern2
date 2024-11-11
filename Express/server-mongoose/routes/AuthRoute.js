@@ -7,7 +7,7 @@ router.post('/register', async (req, res) => {
     try {
         // const newuser = new Users(req.body)
         const { name, email, phone, password } = req.body
-        if (!name || !email || !phone || !password) {
+        if (!name || !email || !phone || !password ) {
             return res.status(401).json({ message: "All fields required" })
         }
 
@@ -30,6 +30,7 @@ router.post('/register', async (req, res) => {
             name,
             email,
             phone,
+            role: "USER",
             password: hashedpassword
         })
         await newuser.save()
@@ -61,7 +62,7 @@ router.post('/login', async (req, res) => {
         
         //Generate JWT
         const secretkey = '1234'
-        const token = jwt.sign({ email: email, exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24 * 7)}, secretkey)
+        const token = jwt.sign({ email: email,role:user.role, exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24 * 7)}, secretkey)
         return res.status(200).json({ message: "login success",token: token })
     } catch (error) {
         return res.status(500).json({ message: error.message })
