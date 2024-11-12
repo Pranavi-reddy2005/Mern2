@@ -14,6 +14,7 @@ const getUsers = () => axios.get(`${API}/users/all`)
 // const getProducts = () => axios.get(PRODUCT_API)
 // const getOrders = () => axios.get(ORDER_API)
 // const getUsers = () => axios.get(USER_API)
-const Login = (data) => axios.post(`${API}/auth/login`, data)
+const Login = (credentials) => axios.post(`${API}/auth/login`, credentials)
+const Register = (credentials) => axios.post(`${API}/auth/register`, credentials)
 
-export { getProducts, getOrders, getUsers, Login }
+export { getProducts, getOrders, getUsers, Login, Register }
