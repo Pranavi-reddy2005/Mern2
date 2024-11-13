@@ -133,6 +133,7 @@ const AdminUsers = () => {
       <table className='w-full h-full border-collapse border shadow-lg rounded-md'>
         <thead className='shadow-md font-bold text-purple-500 text-left rounded-md'>
           <tr>
+            <th className='p-6'>UID</th>
             <th className='p-6'>Name</th>
             <th className='p-6'>Email</th>
             <th className='p-6'>Phone</th>
@@ -144,6 +145,7 @@ const AdminUsers = () => {
           {
             users.map((user, index) => (
               <tr key={index}>
+                <td className='p-4'>{user._id} </td>
                 <td className='p-4'>{user.name} </td>
                 <td className='p-4'>{user.email}</td>
                 <td className='p-4'>{user.phone}</td>
