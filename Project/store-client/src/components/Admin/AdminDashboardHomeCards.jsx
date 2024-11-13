@@ -1,7 +1,7 @@
 import React from 'react'
 import { ListOrdered, ShoppingCart, Users } from 'lucide-react'
 
-const AdminDashboardHomeCards = () => {
+const AdminDashboardHomeCards = ({products,users,orders}) => {
     return (
         <>
             {/* <div className="grid grid-cols-2 w-[700px] gap-2 max-[500px]:grid-cols-1 px-3">
@@ -28,7 +28,7 @@ const AdminDashboardHomeCards = () => {
                 <div className='w-1/4 h-[10vh] flex flex-row justify-center items-center px-2 shadow-md rounded-md hover:shadow-purple-300 hover:text-purple-400'>
                     <div className='w-[70%] h-full flex flex-col justify-center items-start px-4'>
                         <p className='text-3xl font-bold'>
-                            100
+                            {users}
                         </p>
                         <p className='text-sm font-semibold px-1'>
                             Users
@@ -41,7 +41,7 @@ const AdminDashboardHomeCards = () => {
                 <div className='w-1/4 h-[10vh] flex flex-row justify-center items-center px-2 shadow-md rounded-md hover:shadow-purple-300 hover:text-purple-400'>
                     <div className='w-[70%] h-full flex flex-col justify-center items-start px-4'>
                         <p className='text-3xl font-bold'>
-                            100
+                            {products}
                         </p>
                         <p className='text-sm font-semibold px-1'>
                             Products
@@ -54,7 +54,7 @@ const AdminDashboardHomeCards = () => {
                 <div className='w-1/4 h-[10vh] flex flex-row justify-center items-center px-2 shadow-md rounded-md hover:shadow-purple-300 hover:text-purple-400'>
                     <div className='w-[70%] h-full flex flex-col justify-center items-start px-4'>
                         <p className='text-3xl font-bold'>
-                            100
+                            {orders}
                         </p>
                         <p className='text-sm font-semibold px-1'>
                             Orders

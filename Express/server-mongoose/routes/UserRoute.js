@@ -2,6 +2,14 @@ const express = require('express')
 const router = express.Router();
 const Users = require('../models/UsersModel')
 const bcrypt = require('bcrypt')
+router.get('/count', async (req,res)=>{
+    try{
+        const count = await Users.countDocuments()
+        return res.status(200).json({ count : count})
+    } catch(error) {
+        return res.status(500).json({ message: error.message})
+    }
+})
 router.get('/all', async (req, res) => {
     try {
         const users = await Users.find()
