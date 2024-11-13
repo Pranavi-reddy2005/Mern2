@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import AdminPageHeader from '../../components/Admin/AdminPageHeader'
-import { Loader2, Pencil, Plus, Trash, TriangleAlert, X } from 'lucide-react'
+import { Key, Loader2, Pencil, Plus, Trash, TriangleAlert, X } from 'lucide-react'
 import { getUsers, addUser, deleteUser, editUser } from '../../api/api'
 import { toast } from 'sonner'
 
@@ -10,6 +10,7 @@ const AdminUsers = () => {
   const [currentUser, setCurrentUser] = useState(null)
   const [showAdd, setShowAdd] = useState(false)
   const [showEdit, setShowEdit] = useState(false)
+  const [showReset, setShowReset] = useState(false)
   const nameRef = useRef('')
   const emailRef = useRef('')
   const phoneRef = useRef(0)
@@ -66,7 +67,7 @@ const AdminUsers = () => {
       email: emailRef.current.value,
       phone: phoneRef.current.value,
       role: roleRef.current.value,
-      password: passwordRef.current.value
+      // password: passwordRef.current.value
     }
     try {
       const response = await editUser(user, currentUser._id)
@@ -78,6 +79,10 @@ const AdminUsers = () => {
     } catch (error) {
       toast.error("Error while Updating")
     }
+  }
+  const resetHelper = (user) => {
+    setCurrentUser(user)
+    setShowEdit(true)
   }
   const handleDelete = async (id) => {
     try {
@@ -155,6 +160,11 @@ const AdminUsers = () => {
                     onClick={() => { editHelper(user) }}>
                     <Pencil />
                   </button>
+                  <button className='h-15 w-15 border-orange-500 border-2 p-1 rounded-md text-orange-500 shadow-md
+               hover:bg-orange-500 hover:text-white hover:shadow-orange-500'
+                    onClick={() => { resetHelper(user) }}>
+                    <Key />
+                  </button>
                   <button className='h-15 w-15 border-red-500 border-2 p-1 rounded-md text-red-500 shadow-md
                hover:bg-red-500 hover:text-white hover:shadow-red-500'
                     onClick={() => { handleDelete(user._id) }}>
@@ -215,7 +225,7 @@ const AdminUsers = () => {
       {showEdit && (
         <>
           <div className="absolute top-0 left-0 z-50 h-screen w-screen flex justify-center items-center bg-black/40 ">
-            <div className='h-[55%] w-1/3 flex flex-col justify-center items-center bg-white shadow-2xl rounded-md'>
+            <div className='h-[75%] w-1/3 flex flex-col justify-center items-center bg-white shadow-2xl rounded-md'>
               <div className='h-full w-full flex flex-col justify-center items-center text-lg font-semibold'>
                 <div className="h-[20%] w-[80%] flex flex-row justify-center items-center">
                   <h1 className='w-1/2 text-left text-xl my-6 font-bold text-blue-500'>Edit Product</h1>
@@ -227,7 +237,13 @@ const AdminUsers = () => {
                   <input ref={nameRef} type="text" name="" id="name" placeholder='Name' defaultValue={currentUser.name} className='w-full shadow-sm outline-none bg-[#f5f5f7] border-b-2 border-transparent p-4 focus:shadow-lg focus:border-b-2 focus:border-blue-400 rounded-sm' required autoFocus />
                   <input ref={emailRef} type="text" name="" id="email" placeholder='Email' defaultValue={currentUser.email} className='w-full shadow-sm outline-none bg-[#f5f5f7] border-b-2 border-transparent p-4 focus:shadow-lg focus:border-b-2 focus:border-blue-400 rounded-sm' required />
                   <input ref={phoneRef} type="number" name="" id="phone" placeholder='Phone' defaultValue={currentUser.phone} className='w-full shadow-sm outline-none bg-[#f5f5f7] border-b-2 border-transparent p-4 focus:shadow-lg focus:border-b-2 focus:border-blue-400 rounded-sm' required />
-                  <input ref={passwordRef} type="password" name="" id="password" placeholder='Password' defaultValue={currentUser.password} className='w-full shadow-sm outline-none bg-[#f5f5f7] border-b-2 border-transparent p-4 focus:shadow-lg focus:border-b-2 focus:border-blue-400 rounded-sm' required />
+                  {/* <input ref={passwordRef} type="password" name="" id="password" placeholder='Password' defaultValue={currentUser.password} className='w-full shadow-sm outline-none bg-[#f5f5f7] border-b-2 border-transparent p-4 focus:shadow-lg focus:border-b-2 focus:border-blue-400 rounded-sm' required /> */}
+                  <div className="select h-[2rem] w-[80%]">
+                    <select name="format" id="format" defaultValue='ADMIN' ref={roleRef}>
+                      <option value="ADMIN">Admin</option>
+                      <option value="USER">User</option>
+                    </select>
+                  </div>
                   <button type="submit" className="w-full h-[3rem]  shadow-lg shadow-gray-400 hover:shadow-blue-400 bg-blue-500 text-white rounded-sm outline-none">Save</button>
                 </form>
               </div>
