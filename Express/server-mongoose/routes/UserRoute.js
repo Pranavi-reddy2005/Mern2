@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router();
 const Users = require('../models/UsersModel')
-
+const bcrypt = require('bcrypt')
 router.get('/all', async (req, res) => {
     try {
         const users = await Users.find()
@@ -16,7 +16,7 @@ router.post('/add', async (req, res) => {
         // const newuser = new Users(req.body)
         const { name, email, phone, password, role } = req.body
         if (!name || !email || !phone || !password || !role) {
-            return res.status(401).json({ message: "All fields required" })
+            return res.status(400).json({ message: "All fields required" })
         }
 
         //TODO : Add User Email & Phone Validation

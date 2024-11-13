@@ -13,11 +13,15 @@ const addProduct = (product) => axios.post(`${API}/products/add`, product)
 const editProduct = (product, id) => axios.put(`${API}/products/edit/${id}`, product)
 const deleteProduct = (id) => axios.delete(`${API}/products/delete/${id}`)
 const getOrders = () => axios.get(`${API}/orders/all`)
+
 const getUsers = () => axios.get(`${API}/users/all`)
+const addUser = (user) => axios.post(`${API}/users/add`, user)
+const editUser = (user, id) => axios.put(`${API}/users/edit/${id}`, user)
+const deleteUser = (id) => axios.delete(`${API}/users/delete/${id}`)
 // const getProducts = () => axios.get(PRODUCT_API)
 // const getOrders = () => axios.get(ORDER_API)
 // const getUsers = () => axios.get(USER_API)
 const Login = (credentials) => axios.post(`${API}/auth/login`, credentials)
 const Register = (credentials) => axios.post(`${API}/auth/register`, credentials)
 
-export { getProducts, getOrders, getUsers, Login, Register, addProduct, deleteProduct, editProduct }
+export { getProducts, getOrders, getUsers, Login, Register, addProduct, deleteProduct, editProduct, addUser, editUser, deleteUser  }
