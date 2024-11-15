@@ -21,6 +21,7 @@ const getUsersCount = () => axios.get(`${API}/users/count`)
 const addUser = (user) => axios.post(`${API}/users/add`, user)
 const editUser = (user, id) => axios.put(`${API}/users/edit/${id}`, user)
 const deleteUser = (id) => axios.delete(`${API}/users/delete/${id}`)
+const resetPassword = (password, id) => axios.put(`${API}/users/resetpassword/${id}`, password)
 // const getProducts = () => axios.get(PRODUCT_API)
 // const getOrders = () => axios.get(ORDER_API)
 // const getUsers = () => axios.get(USER_API)
@@ -29,4 +30,4 @@ const Register = (credentials) => axios.post(`${API}/auth/register`, credentials
 
 export { getProducts, getOrders, getUsers, Login, Register, 
     addProduct, deleteProduct, editProduct, addUser, editUser,
-     deleteUser, getProductsCount,getUsersCount,getOrdersCount  }
+     deleteUser, getProductsCount,getUsersCount,getOrdersCount,resetPassword  }

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import AdminPageHeader from '../../components/Admin/AdminPageHeader'
 import { Key, Loader2, Pencil, Plus, Trash, TriangleAlert, X } from 'lucide-react'
-import { getUsers, addUser, deleteUser, editUser } from '../../api/api'
+import { getUsers, addUser, deleteUser, editUser,resetPassword } from '../../api/api'
 import { toast } from 'sonner'
 
 const AdminUsers = () => {
@@ -82,7 +82,19 @@ const AdminUsers = () => {
   }
   const resetHelper = (user) => {
     setCurrentUser(user)
-    setShowEdit(true)
+    setShowReset(true)
+  }
+  const handleReset = async (e) => {
+    e.preventDefault()
+    try {
+      const response = await resetPassword({ password: passwordRef.current.value }, currentUser._id)
+      if (response.status === 200) {
+        setShowReset(!showReset)
+        toast.warning("User Password Updated !")
+      }
+    } catch (error) {
+      toast.error("Error while Updating")
+    }
   }
   const handleDelete = async (id) => {
     try {
@@ -208,13 +220,13 @@ const AdminUsers = () => {
                   <input ref={nameRef} type="text" name="" id="name" placeholder='Name' className='w-full shadow-sm outline-none bg-[#f5f5f7] border-b-2 border-transparent p-4 focus:shadow-lg focus:border-b-2 focus:border-green-400 rounded-sm' required autoFocus />
                   <input ref={emailRef} type="text" name="" id="email" placeholder='Email' className='w-full shadow-sm outline-none bg-[#f5f5f7] border-b-2 border-transparent p-4 focus:shadow-lg focus:border-b-2 focus:border-green-400 rounded-sm' required />
                   <input ref={phoneRef} type="number" name="" id="phone" placeholder='Phone' className='w-full shadow-sm outline-none bg-[#f5f5f7] border-b-2 border-transparent p-4 focus:shadow-lg focus:border-b-2 focus:border-green-400 rounded-sm' required />
-                  <div className="select h-[2rem] w-[80%]">
+                  <input ref={passwordRef} type="password" name="" id="password" placeholder='Password' className='w-full shadow-sm outline-none bg-[#f5f5f7] border-b-2 border-transparent p-4 focus:shadow-lg focus:border-b-2 focus:border-green-400 rounded-sm' required />
+                  <div className="select my-2">
                     <select name="format" id="format" defaultValue='ADMIN' ref={roleRef}>
                       <option value="ADMIN">Admin</option>
                       <option value="USER">User</option>
                     </select>
                   </div>
-                  <input ref={passwordRef} type="password" name="" id="password" placeholder='Password' className='w-full shadow-sm outline-none bg-[#f5f5f7] border-b-2 border-transparent p-4 focus:shadow-lg focus:border-b-2 focus:border-green-400 rounded-sm' required />
                   <button type="submit" className="w-full h-[3rem]  shadow-lg shadow-gray-400 hover:shadow-green-400 bg-green-500 text-white rounded-sm outline-none">Add</button>
                 </form>
               </div>
@@ -238,8 +250,8 @@ const AdminUsers = () => {
                   <input ref={emailRef} type="text" name="" id="email" placeholder='Email' defaultValue={currentUser.email} className='w-full shadow-sm outline-none bg-[#f5f5f7] border-b-2 border-transparent p-4 focus:shadow-lg focus:border-b-2 focus:border-blue-400 rounded-sm' required />
                   <input ref={phoneRef} type="number" name="" id="phone" placeholder='Phone' defaultValue={currentUser.phone} className='w-full shadow-sm outline-none bg-[#f5f5f7] border-b-2 border-transparent p-4 focus:shadow-lg focus:border-b-2 focus:border-blue-400 rounded-sm' required />
                   {/* <input ref={passwordRef} type="password" name="" id="password" placeholder='Password' defaultValue={currentUser.password} className='w-full shadow-sm outline-none bg-[#f5f5f7] border-b-2 border-transparent p-4 focus:shadow-lg focus:border-b-2 focus:border-blue-400 rounded-sm' required /> */}
-                  <div className="select h-[2rem] w-[80%]">
-                    <select name="format" id="format" defaultValue='ADMIN' ref={roleRef}>
+                  <div className="select my-2">
+                    <select name="format" id="format" defaultValue={currentUser.role} ref={roleRef}>
                       <option value="ADMIN">Admin</option>
                       <option value="USER">User</option>
                     </select>
@@ -251,6 +263,26 @@ const AdminUsers = () => {
           </div>
         </>
       )}
+       {showReset && (
+        <>
+          <div className="absolute top-0 left-0 z-50 h-screen w-screen flex justify-center items-center bg-black/40 ">
+            <div className='h-[35%] w-1/3 flex flex-col justify-center items-center bg-white shadow-2xl rounded-md'>
+              <div className='h-full w-full flex flex-col justify-center items-center text-lg font-semibold'>
+                <div className="h-[20%] w-[80%] flex flex-row justify-center items-center">
+                  <h1 className='w-1/2 text-left text-xl my-6 font-bold text-orange-500'>Reset Password</h1>
+                  <div className="w-1/2 flex justify-end items-center text-red-500 cursor-pointer" onClick={() => { setShowReset(!showReset) }}>
+                    <X className="h-8 w-8 border-2 p-1  border-red-500 rounded-full  hover:bg-red-500 hover:text-white" />
+                  </div>
+                </div>
+                <form className='h-[70%] w-[80%] flex flex-col justify-center items-center gap-8' onSubmit={handleReset}>
+                  <input ref={passwordRef} type="text" name="" id="name" placeholder='New Password' className='w-full shadow-sm outline-none bg-[#f5f5f7] border-b-2 border-transparent p-4 focus:shadow-lg focus:border-b-2 focus:border-orange-400 rounded-sm' required autoFocus />
+                  <button type="submit" className="w-full h-[3rem]  shadow-lg shadow-gray-400 hover:shadow-orange-400 bg-orange-500 text-white rounded-sm outline-none">Reset</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </>
+      )}g
     </div>
   )
 }
