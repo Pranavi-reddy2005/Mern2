@@ -282,7 +282,7 @@ const AdminUsers = () => {
             </div>
           </div>
         </>
-      )}g
+      )}
     </div>
   )
 }

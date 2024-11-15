@@ -1,5 +1,6 @@
 
 import axios from 'axios'
+import { getToken } from '../pages/service/auth'
 
 
 // const API = 'https://671b70ef2c842d92c37fec0c.mockapi.io/prodcutsapp/products'
@@ -7,6 +8,21 @@ const API = 'http://localhost:3000'
 // const PRODUCT_API = 'http://localhost:3000/products/all'
 // const ORDER_API = 'http://localhost:3000/orders/all'
 // const USER_API = 'http://localhost:3000/users/all'
+const axiosInstance = axios.create({
+    API
+})
+axiosInstance.interceptors.request.use(
+    (config) => {
+        const token = getToken()
+        if (token) {
+            config.headers.Authorization = token
+        }
+        return config;
+    },
+    (error) => {
+        return Promise.reject(error)
+    }
+)
 
 const getProducts = () => axios.get(`${API}/products/all`)
 const getProductsCount = () => axios.get(`${API}/products/count`)
@@ -15,6 +31,7 @@ const editProduct = (product, id) => axios.put(`${API}/products/edit/${id}`, pro
 const deleteProduct = (id) => axios.delete(`${API}/products/delete/${id}`)
 const getOrders = () => axios.get(`${API}/orders/all`)
 const getOrdersCount = () => axios.get(`${API}/orders/count`)
+const deleteOrder = (id) => axios.delete(`${API}/orders/delete/${id}`)
 
 const getUsers = () => axios.get(`${API}/users/all`)
 const getUsersCount = () => axios.get(`${API}/users/count`)
@@ -30,4 +47,4 @@ const Register = (credentials) => axios.post(`${API}/auth/register`, credentials
 
 export { getProducts, getOrders, getUsers, Login, Register, 
     addProduct, deleteProduct, editProduct, addUser, editUser,
-     deleteUser, getProductsCount,getUsersCount,getOrdersCount,resetPassword  }
+     deleteUser, getProductsCount,getUsersCount,getOrdersCount,resetPassword,deleteOrder  }
