@@ -44,7 +44,7 @@ const Products = () => {
 
         if (products) {
             const filtered = products.filter((product) =>
-                product.title.toLowerCase().includes(query)
+                product.name.toLowerCase().includes(query)
             );
             setFilterProduct(filtered)
         }
