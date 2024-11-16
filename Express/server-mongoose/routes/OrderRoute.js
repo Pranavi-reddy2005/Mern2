@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router();
 const Orders = require('../models/OrdersModel')
-const {validate,validateTokenAdmin} = require('../config/auth')
+const {validateToken,validateTokenAdmin} = require('../config/auth')
 router.get('/count',validateTokenAdmin, async (req,res)=>{
     try{
         const count = await Orders.countDocuments()
@@ -19,7 +19,7 @@ router.get('/all',validateTokenAdmin, async (req, res) => {
     }
 })
 
-router.post('/add',validateTokenAdmin, async (req, res) => {
+router.post('/add',validateToken, async (req, res) => {
     try {
         const neworder = new Orders(req.body)
         const { uid, pid, phone, address, total } = neworder

@@ -2,8 +2,8 @@ const express = require('express')
 const router = express.Router();
 const Users = require('../models/UsersModel')
 const bcrypt = require('bcrypt')
-const { validate,validateTokenAdmin} = require('../config/auth')
-router.get('/count', async (req,res)=>{
+const { validateTokenAdmin} = require('../config/auth')
+router.get('/count',validateTokenAdmin, async (req,res)=>{
     try{
         const count = await Users.countDocuments()
         return res.status(200).json({ count : count})
@@ -11,7 +11,7 @@ router.get('/count', async (req,res)=>{
         return res.status(500).json({ message: error.message})
     }
 })
-router.get('/all', async (req, res) => {
+router.get('/all',validateTokenAdmin, async (req, res) => {
     try {
         const users = await Users.find()
         res.status(200).json(users)
@@ -56,10 +56,10 @@ router.post('/add',validateTokenAdmin, async (req, res) => {
         return res.status(500).json({ message: error.message })
     }
 })
-router.post('/defaultadmin', async () =>{
+router.post('/defaultadmin', async (req,res) =>{
     try {
         const email = 'admin@gmail.com'
-        const phone = 9867565
+        const phone = 13321
         const password = '1234'
         const exisitingemail = await Users.findOne({ email })
         if (exisitingemail) {
@@ -99,7 +99,7 @@ router.put('/edit/:id', validateTokenAdmin, async (req, res) => {
         res.status(500).json({ message: error.message })
     }
 })
-router.put('/resetpassword/:id', async(req,res)=>{
+router.put('/resetpassword/:id',validateTokenAdmin, async(req,res)=>{
     try{
         const id = req.params.id
         const { password } = req.body
@@ -120,7 +120,7 @@ router.put('/resetpassword/:id', async(req,res)=>{
 
 })
 
-router.delete('/delete/:id', async (req, res) => {
+router.delete('/delete/:id',validateTokenAdmin, async (req, res) => {
     try {
         const id = req.params.id
         const existinguser = await Users.findOne({ _id: id })
