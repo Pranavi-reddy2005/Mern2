@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router();
 const Users = require('../models/UsersModel')
 const bcrypt = require('bcrypt')
+const { validate,validateTokenAdmin} = require('../config/auth')
 router.get('/count', async (req,res)=>{
     try{
         const count = await Users.countDocuments()
@@ -19,7 +20,7 @@ router.get('/all', async (req, res) => {
     }
 })
 
-router.post('/add', async (req, res) => {
+router.post('/add',validateTokenAdmin, async (req, res) => {
     try {
         // const newuser = new Users(req.body)
         const { name, email, phone, password, role } = req.body
@@ -55,8 +56,37 @@ router.post('/add', async (req, res) => {
         return res.status(500).json({ message: error.message })
     }
 })
+router.post('/defaultadmin', async () =>{
+    try {
+        const email = 'admin@gmail.com'
+        const phone = 9867565
+        const password = '1234'
+        const exisitingemail = await Users.findOne({ email })
+        if (exisitingemail) {
+            return res.status(500).json({ message:`Default Admin Exists !` })
+        }
 
-router.put('/edit/:id', async (req, res) => {
+        //Phone
+        const exisitingphone = await Users.findOne({ phone })
+        if (exisitingphone) {
+            return res.status(500).json({ message: `User with ${phone} already exists !` })
+        }
+        const salt = await bcrypt.genSalt(10)
+        const hashedpassword = await bcrypt.hash(password, salt)
+        const newuser = new Users({
+            name: "Admin",
+            email,
+            phone,
+            role : "ADMIN",
+            password: hashedpassword
+        })
+        await newuser.save()
+        return res.status(200).json({message: "Default Admin Added !"})
+    } catch (error) {
+        return res.status(500).json({ message: error.message })
+    } 
+})
+router.put('/edit/:id', validateTokenAdmin, async (req, res) => {
     try {
         const id = req.params.id
         const existinguser = await Users.findOne({ _id: id })

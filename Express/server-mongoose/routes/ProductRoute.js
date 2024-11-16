@@ -1,9 +1,9 @@
 const express = require('express')
 const router = express.Router()
 const Products = require('../models/ProductsModel')
-const validate = require('../config/auth')
+const { validate,validateTokenAdmin} = require('../config/auth')
 
-router.get('/count', async (req,res)=>{
+router.get('/count',validateTokenAdmin, async (req,res)=>{
     try{
         const count = await Products.countDocuments()
         return res.status(200).json({ count : count})
